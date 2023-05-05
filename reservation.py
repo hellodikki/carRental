@@ -1,0 +1,172 @@
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+import webbrowser
+import sqlite3
+con = sqlite3.connect('carRental.sqlite')
+cur = con.cursor()
+
+class Ui_ReservationWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(821, 585)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(120, 30, 221, 131))
+        self.label.setAutoFillBackground(True)
+        self.label.setText("")
+        self.label.setPixmap(QtGui.QPixmap(""))
+        self.label.setScaledContents(True)
+        self.label.setObjectName("label")
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.label_2.setGeometry(QtCore.QRect(110, 220, 91, 31))
+        self.label_2.setObjectName("label_2")
+        self.listWidget = QtWidgets.QListWidget(self.centralwidget)
+        self.listWidget.setGeometry(QtCore.QRect(460, 61, 351, 471))
+        self.listWidget.setObjectName("listWidget")
+
+        self.listWidget.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.listWidget.itemClicked.connect(self.clicked)
+
+        self.label_3 = QtWidgets.QLabel(self.centralwidget)
+        self.label_3.setGeometry(QtCore.QRect(110, 260, 121, 31))
+        self.label_3.setObjectName("label_3")
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_4.setGeometry(QtCore.QRect(110, 300, 121, 31))
+        self.label_4.setObjectName("label_4")
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        self.label_5.setGeometry(QtCore.QRect(110, 340, 91, 31))
+        self.label_5.setObjectName("label_5")
+        self.label_6 = QtWidgets.QLabel(self.centralwidget)
+        self.label_6.setGeometry(QtCore.QRect(260, 220, 91, 31))
+        self.label_6.setObjectName("label_6")
+        self.label_7 = QtWidgets.QLabel(self.centralwidget)
+        self.label_7.setGeometry(QtCore.QRect(260, 260, 91, 31))
+        self.label_7.setObjectName("label_7")
+        self.label_8 = QtWidgets.QLabel(self.centralwidget)
+        self.label_8.setGeometry(QtCore.QRect(260, 300, 91, 31))
+        self.label_8.setObjectName("label_8")
+        self.label_9 = QtWidgets.QLabel(self.centralwidget)
+        self.label_9.setGeometry(QtCore.QRect(260, 340, 91, 31))
+        self.label_9.setObjectName("label_9")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget, clicked = lambda : self.unreserver())
+        self.pushButton.setGeometry(QtCore.QRect(180, 440, 93, 28))
+        self.pushButton.setObjectName("pushButton")
+        self.label_10 = QtWidgets.QLabel(self.centralwidget)
+        self.label_10.setGeometry(QtCore.QRect(110, 380, 91, 31))
+        self.label_10.setObjectName("label_10")
+        self.label_11 = QtWidgets.QLabel(self.centralwidget)
+        self.label_11.setGeometry(QtCore.QRect(260, 380, 91, 31))
+        self.label_11.setObjectName("label_11")
+        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit.setGeometry(QtCore.QRect(460, 17, 311, 31))
+        self.lineEdit.setText("")
+        self.lineEdit.setObjectName("lineEdit")
+
+        self.lineEdit.textChanged.connect(self.update_list)
+
+        self.lineEdit_7 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_7.setObjectName("lineEdit_7")
+        self.lineEdit_7.hide()
+
+        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget, clicked = lambda: self.reset())
+        self.pushButton_2.setGeometry(QtCore.QRect(780, 18, 31, 31))
+        self.pushButton_2.setText("⟳")
+        self.pushButton_2.setObjectName("pushButton_2")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 821, 25))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        cur.execute("SELECT marque FROM car WHERE reserver=1")
+        cars=cur.fetchall()
+        for car in cars:
+            self.listWidget.addItem(car[0])
+    def update_list(self, text) :
+        self.listWidget.clear()
+        cur.execute("SELECT marque FROM car WHERE marque LIKE ? AND reserver=1",(text+'%',))
+        cars=cur.fetchall()
+        for car in cars:
+            self.listWidget.addItem(car[0])
+    def reset(self) :
+        self.lineEdit.setText("")
+        self.listWidget.clear()
+        cur.execute("SELECT marque FROM car WHERE reserver=1")
+        cars=cur.fetchall()
+        for car in cars:
+            self.listWidget.addItem(car[0])
+    def clicked(self, item):
+        cur.execute("SELECT * FROM car WHERE marque=? AND reserver=1",(item.text(),))
+        car=cur.fetchone()
+        self.lineEdit_7.setText(str(car[0]))
+        self.label.setPixmap(QtGui.QPixmap(car[1]))
+        self.label_6.setText(car[2])
+        self.label_7.setText(car[3])
+        self.label_8.setText(str(car[4]))
+        self.label_9.setText(car[5])
+        self.label_11.setText(str(car[6]) + " DH")
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label_2.setText(_translate("MainWindow", "Marque"))
+        self.label_3.setText(_translate("MainWindow", "Type de carburant"))
+        self.label_4.setText(_translate("MainWindow", "Nombre de place"))
+        self.label_5.setText(_translate("MainWindow", "Transmission"))
+        self.pushButton.setText(_translate("MainWindow", "Annuler"))
+        self.label_10.setText(_translate("MainWindow", "Prix jounalié"))
+
+        cur.execute("SELECT * FROM car WHERE reserver=1")
+        car=cur.fetchone()
+        self.lineEdit_7.setText(str(car[0]))
+        self.label.setPixmap(QtGui.QPixmap(car[1]))
+        self.label_6.setText(car[2])
+        self.label_7.setText(car[3])
+        self.label_8.setText(str(car[4]))
+        self.label_9.setText(car[5])
+        self.label_11.setText(str(car[6]) + " DH")
+    def unreserver(self):
+        val = self.lineEdit_7.text()
+        con.execute("UPDATE car SET reserver=0 WHERE idCar=?",(val,))
+        con.commit()
+        cur.execute("SELECT marque FROM car WHERE reserver=1")
+        self.lineEdit_7.clear()
+        self.listWidget.clear()
+        cars=cur.fetchall()
+        for car in cars:
+            self.listWidget.addItem(car[0])
+        cur.execute("SELECT * FROM car WHERE reserver=1")
+        car=cur.fetchone()
+        self.lineEdit_7.setText(str(car[0]))
+        self.label.setPixmap(QtGui.QPixmap(car[1]))
+        self.label_6.setText(car[2])
+        self.label_7.setText(car[3])
+        self.label_8.setText(str(car[4]))
+        self.label_9.setText(car[5])
+        self.label_11.setText(str(car[6]) + " DH")
+        msg = QMessageBox()
+        msg.setWindowTitle("Reussit")
+        msg.setText("La reservation été bien annulée!")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setDefaultButton(QMessageBox.Ok)
+        msg.exec_()
+
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_ReservationWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
