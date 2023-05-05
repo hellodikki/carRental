@@ -407,79 +407,79 @@ class Ui_MainWindow(object):
 
     def findHybride(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE carburant='Hybride'")
+        cur.execute("SELECT marque FROM car WHERE carburant='Hybride' AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def findEssence(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE carburant='Essence'")
+        cur.execute("SELECT marque FROM car WHERE carburant='Essence' AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def findDiesel(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE carburant='Diesel'")
+        cur.execute("SELECT marque FROM car WHERE carburant='Diesel' AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def findElectrique(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE carburant='Electrique'")
+        cur.execute("SELECT marque FROM car WHERE carburant='Electrique' AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def findDeux(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE place=2")
+        cur.execute("SELECT marque FROM car WHERE place=2 AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def findQuatre(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE place=4")
+        cur.execute("SELECT marque FROM car WHERE place=4 AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def findCinq(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE place=5")
+        cur.execute("SELECT marque FROM car WHERE place=5 AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def findManuelle(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE transmission='manuelle'")
+        cur.execute("SELECT marque FROM car WHERE transmission='manuelle' AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def findAutomatique(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE transmission='automatique'")
+        cur.execute("SELECT marque FROM car WHERE transmission='automatique' AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def find200(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE prix=200")
+        cur.execute("SELECT marque FROM car WHERE prix=200 AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def find400(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE prix=400")
+        cur.execute("SELECT marque FROM car WHERE prix=400 AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def find500(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE prix=500")
+        cur.execute("SELECT marque FROM car WHERE prix=500 AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
     def find600(self):
         self.listWidget.clear()
-        cur.execute("SELECT marque FROM car WHERE prix=600")
+        cur.execute("SELECT marque FROM car WHERE prix=600 AND reserver=0")
         cars=cur.fetchall()
         for car in cars:
             self.listWidget.addItem(car[0])
