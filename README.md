@@ -1,6 +1,8 @@
 # carRental
 Application pour la gestion de la location de voitures.
 
+(Veuillez lancer la page login.py en premier)
+
 __Problématique:__
  La plupart des gens rencontrent une difficulté à avoir une voiture, cette dernière est une chose très importante dans notre vie quotidienne. ils sont obligés de la demandée à leurs mais qui ne sont pas toujours disponibles.
 
